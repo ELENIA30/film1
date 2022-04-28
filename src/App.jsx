@@ -2,6 +2,8 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 import Home from "./pages/Home";
+import AddMovie  from "./pages/AddMovie";
+import EditMovie from "./pages/EditMovie";
 import CreateCardForm from "./components/CreateCardForm";
 import "./App.css";
 
@@ -21,6 +23,8 @@ function App() {
         </nav>
 
         <Routes>
+          <Route path="/edit-movie/:id" element={<EditMovie/>}/>
+          <Route path="/add-movie" element={<AddMovie/>}/>
           <Route path="/add-movie" element={<CreateCardForm />} />
           <Route path="/" element={<Home />} />
           

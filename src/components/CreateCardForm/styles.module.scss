@@ -1,13 +1,19 @@
-input,
-label {
-  padding: 3px 10px;
-}
 
-.CreateCardForm {
-}
+
 
 .CreateCardForm__form {
   display: flex;
   flex-direction: column;
   gap: 10px;
+
+
+
+
+
+  &__input {
+  padding: 3px 10px;
+  }
+  &__label{
+    padding: 3px 10px;
+  }
 }

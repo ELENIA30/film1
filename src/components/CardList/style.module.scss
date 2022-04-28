@@ -1,4 +1,8 @@
-.CardList__wrapper {
+.CardList {
+
+  &__wrapper {
     display: flex;
     gap: 10px;
   }
+
+}

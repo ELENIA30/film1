@@ -1,17 +1,14 @@
-import "./style.css"
+import styles from './styles.module.scss'
 
 const Modal = (props) => {
     return (
-        <div  id={props.showCard} className='modal'>
-            <div className='modal-content'>
-                <div className='modal-header'>
-                    <h4 className='modal-title'>Complimenti</h4>
+        <div  id={props.showCard} className={styles.modal}>
+            <div className={styles.modal.content}>
+                <div className={styles.modal.header}>
+                    <h4 className={styles.modal__h4}>Complimenti</h4>
                 </div>
-                <div className="modal-body">
+                <div className={styles.modal.body}>
                     il tuo titolo è stato aggiunto!
-                </div>
-                <div className='modal-footer'>
-                  
                 </div>
              </div>
 
