@@ -2,6 +2,8 @@ const BASE_URL = "https://edgemony-backend.herokuapp.com/movies";
 
 // GET
 const GET = () => fetch(BASE_URL).then((res) => res.json());
+const GETbyID = (id) => fetch(`${BASE_URL}/${id}`).then((res) => res.json());
+
 
 // POST
 const POST = (body) =>
@@ -26,4 +28,4 @@ const PUT = (id, body) =>
     body: JSON.stringify(body),
   });
 
-export { GET, POST, DELETE, PUT };
+export { GET, POST, DELETE, PUT , GETbyID };

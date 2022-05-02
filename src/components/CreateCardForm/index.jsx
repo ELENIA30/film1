@@ -1,37 +1,49 @@
 import { useState } from "react";
-import { POST } from "../../utils/http";
-import Modal from "../Modal";
-import styles from './styles.module.scss';
+import { useLocation } from "react-router-dom";
+import { POST, PUT } from "../../utils/http";
+import styles from "./styles.module.scss";
 
-function CreateCardForm() {
+function CreateCardForm({ setModalVisibility, callType }) {
   const [title, setTitle] = useState("");
   const [year, setYear] = useState("");
   const [poster, setPoster] = useState("");
   const [genres, setGenres] = useState("");
   const [description, setDescription] = useState("");
-  const [ShowModal, setShowModal] = useState("notvisible");
+
+  const location = useLocation();
+  const movieId = location.pathname.split("/").reverse()[0];
+
   const unStringifyGenres = (genres) => genres.split(",");
 
   const addNewMovie = (e) => {
     e.preventDefault();
-    setShowModal("visible");
 
-    POST({
-      title,
-      year,
-      poster,
-      genres: unStringifyGenres(genres),
-      description,
-    });
+    if (callType === "POST") {
+      POST({
+        title,
+        year,
+        poster,
+        genres: unStringifyGenres(genres),
+        description,
+      });
+
+      setModalVisibility(true);
+    } else {
+      PUT(movieId, {
+        title,
+        year,
+        poster,
+        genres: unStringifyGenres(genres),
+        description,
+      });
+    }
   };
 
   return (
     <div className={styles.CreateCardForm}>
-      <h2 className={styles.CreateCardForm__h2}>Create a new movie card</h2>
-
-      <form  onSubmit={addNewMovie} className={styles.CreateCardForm__form}>
-        <label  className={styles.CreateCardForm__label} htmlFor="title">Title:</label>
-        <input  className={styles.CreateCardForm__input}
+      <form onSubmit={addNewMovie} className="CreateCardForm__form">
+        <label htmlFor="title">Title:</label>
+        <input
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           type="text"
@@ -40,8 +52,8 @@ function CreateCardForm() {
           required
         />
 
-        <label className={styles.CreateCardForm__label}htmlFor="year">Year:</label>
-        <input className={styles.CreateCardForm__input}
+        <label htmlFor="year">Year:</label>
+        <input
           value={year}
           onChange={(e) => setYear(e.target.value)}
           type="text"
@@ -50,8 +62,8 @@ function CreateCardForm() {
           required
         />
 
-        <label className={styles.CreateCardForm__label} htmlFor="poster">Poster:</label>
-        <input className={styles.CreateCardForm__input}
+        <label htmlFor="poster">Poster:</label>
+        <input
           value={poster}
           onChange={(e) => setPoster(e.target.value)}
           type="text"
@@ -60,8 +72,8 @@ function CreateCardForm() {
           required
         />
 
-        <label  className={styles.CreateCardForm__label} htmlFor="genres">Genres:</label>
-        <input className={styles.CreateCardForm__input}
+        <label htmlFor="genres">Genres:</label>
+        <input
           value={genres}
           onChange={(e) => setGenres(e.target.value)}
           type="text"
@@ -70,8 +82,8 @@ function CreateCardForm() {
           required
         />
 
-        <label  className={styles.CreateCardForm__label} htmlFor="description">Description:</label>
-        <input className={styles.CreateCardForm__input}
+        <label htmlFor="description">Description:</label>
+        <input
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           type="text"
@@ -80,11 +92,8 @@ function CreateCardForm() {
           required
         />
 
-        <input className={styles.CreateCardForm__input} type="submit" value="Send it!" />
-
+        <input type="submit" value="Send it!" />
       </form>
-
-      <Modal showCard={ShowModal}/>
     </div>
   );
 }
