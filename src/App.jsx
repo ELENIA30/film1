@@ -1,13 +1,16 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import {HashRouter as Router, Routes, Route, Link } from "react-router-dom";
+import {Suspense, lazy, useState} from "react";
 
-import Home from "./pages/Home";
-import AddMovie  from "./pages/AddMovie";
-import EditMovie from "./pages/EditMovie";
-import "./App.css";
+import {Loading} from "./components/Loading";
+
+const Home = lazy(() => import(/* webpackChunkName: "home" */ "./pages/Home"));
+const AddMovie = lazy(() => import(/* webpackChunkName: "add" */ "./pages/AddMovie"));
+const EditMovie = lazy(() => import(/* webpackChunkName: "edit" */ "./pages/EditMovie"));
 
 function App() {
   return (
+
     <Router>
       <div className="App">
         <nav className="App--navbar">
@@ -22,10 +25,25 @@ function App() {
         </nav>
 
         <Routes>
-          <Route path="/edit-movie/:id" element={<EditMovie/>}/>
-          <Route path="/add-movie" element={<AddMovie/>}/>
+          <Route path="/edit-movie/:id" element={
+          <Suspense fallback ={<Loading/>}>
+            <EditMovie/>
+            </Suspense>
+          }
+          />
+          <Route path="/add-movie" element={
+            <Suspense fallback ={<Loading/>}>
+              <AddMovie/>
+            </Suspense>
+          }
+          />
         
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={ 
+          <Suspense fallback={<Loading/>}>
+             <Home />
+          </Suspense>
+         } 
+         />
           
         </Routes>
       </div>
