@@ -3,7 +3,6 @@ import {HashRouter as Router, Routes, Route, Link } from "react-router-dom";
 import {Suspense, lazy, useState} from "react";
 
 import {Loading} from "./components/Loading";
-
 const Home = lazy(() => import(/* webpackChunkName: "home" */ "./pages/Home"));
 const AddMovie = lazy(() => import(/* webpackChunkName: "add" */ "./pages/AddMovie"));
 const EditMovie = lazy(() => import(/* webpackChunkName: "edit" */ "./pages/EditMovie"));
